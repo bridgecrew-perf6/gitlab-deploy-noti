@@ -1,12 +1,21 @@
-import express from "express";
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import compression from 'compression';
+import router from './router';
+import config from './config';
 
 const app = express()
-const port = 3000
 
-app.get('/', (req, res) => {
-  res.send('Hello World')
-})
+app.use(bodyParser.json());
+app.use(compression());
+app.use(cors());
 
+app.use(router);
+
+const port = config.app.port;
 app.listen(port, () => {
-  console.log(`running app listening on port ${port}`);
+  console.log(`app running...`);
+  console.log(`env=${config.app.env}`);
+  console.log(`port=${port}`);
 })

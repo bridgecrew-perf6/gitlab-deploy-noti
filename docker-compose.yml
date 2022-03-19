@@ -8,10 +8,12 @@ services:
     volumes:
       - .:/src
       - node_modules:/src/node_modules
-    environment:
-      - NODE_ENV=development
     ports:
       - 3000:3000
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
     command: npm run dev
 
 volumes:

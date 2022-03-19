@@ -13,4 +13,5 @@ CMD [ "npm", "start" ]
 FROM base as dev
 ENV NODE_ENV=development
 RUN npm install -g nodemon && npm install
+COPY . .
 CMD ["npm", "run", "dev"]

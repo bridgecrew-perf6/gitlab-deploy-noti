@@ -14,7 +14,15 @@ services:
       - .env
     environment:
       - NODE_ENV=development
+    depends_on:
+      - redis
     command: npm run dev
+
+  redis:
+    image: redis:6.0-alpine
+    volumes:
+      - redis_data:/data
 
 volumes:
   node_modules:
+  redis_data:

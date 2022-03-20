@@ -27,7 +27,7 @@ export class PipelineEventHandler {
     const {
       object_attributes: { stages },
     } = this.body;
-    return (stages || []).includes("deploy-dev"); // TODO: change to 'deploy-prod'
+    return (stages || []).includes("deploy-prod");
   }
 
   renderMessage() {

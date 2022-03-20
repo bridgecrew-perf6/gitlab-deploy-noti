@@ -1,5 +1,5 @@
 {
-  "name": "test_hangout_chat_hook",
+  "name": "gitlab_deploy_notification",
   "version": "1.0.0",
   "description": "",
   "type": "module",

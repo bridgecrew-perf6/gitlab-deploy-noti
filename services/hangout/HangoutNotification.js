@@ -9,8 +9,6 @@ export class HangoutNotification {
   }
 
   async sendMessage(message, threadKey = null) {
-    console.log("---- hangout ------");
-
     let url = config.hangout.web_hook;
     if (threadKey) {
       url += "&threadKey=" + threadKey;

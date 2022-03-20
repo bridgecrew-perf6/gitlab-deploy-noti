@@ -17,14 +17,16 @@ export class TagPushEventHandler {
   async handle() {
     const message = this.renderMessage();
     const threadKey = this.generateThreadKey();    
-    storeData("memo-new-lsp", threadKey);
+    storeData(this.project.name, threadKey);
     hangout.sendMessage(message, threadKey);
-    // storeData(this.project.name, threadKey);
   }
 
   renderMessage() {
-    const projectPiplineUrl = `${this.project.web_url}/-/pipelines`;
-    const projectText = `<${projectPiplineUrl}|${this.project.name}>`;
+    let projectText = this.project.name;
+    if (this.project.web_url) {
+      const projectPiplineUrl = `${this.project.web_url}/-/pipelines`;
+      projectText = `<${projectPiplineUrl}|${this.project.name}>`;
+    }
 
     return `_${this.userName}_ tag  *${this.tag}*  to ${projectText}  🚀`;
   }
@@ -34,7 +36,6 @@ export class TagPushEventHandler {
   }
 
   generateThreadKey() {
-    return `memo-new-lsp_${this.tag}`;
-    // return `${this.project.name}_${this.tag}`;
+    return `${this.project.name}_${this.tag}`;
   }
 }

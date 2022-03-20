@@ -2,7 +2,6 @@ import { PipelineEventHandler, TagPushEventHandler } from "../services/gitlab/";
 
 export class GitlabController {
   static handleHook(req, res) {
-    const tokenHeader = req.headers["x-gitlab-token"];
     const body = req.body;
     const eventType = body.object_kind;
 

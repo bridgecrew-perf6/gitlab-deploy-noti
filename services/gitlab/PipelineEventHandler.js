@@ -13,15 +13,11 @@ export class PipelineEventHandler {
   }
 
   async handle() {
-    console.log("------- pipeline event ---------");
-    console.log(this.body);
-
     if (this.isDeployProd) {
       let threadKey = null;
       if (this.project.name) {
         threadKey = await readData(this.project.name);
       }
-      console.log('getThread:', this.project.name, threadKey);
       const message = this.renderMessage();
       hangout.sendMessage(message, threadKey);
     }
@@ -35,18 +31,22 @@ export class PipelineEventHandler {
   }
 
   renderMessage() {
-
     const projectPiplineUrl = `${this.project.web_url}/-/pipelines`;
     const projectText = `<${projectPiplineUrl}|${this.project.name}>`;
 
-    let statusText = "unknown";
-    if (this.status === "success") {
-      statusText = "*SUCCESS* ✅";
-      // statusText = "*FAILED* 🔥";
-    } else if (this.status === "fail") {
-      statusText = "*FAILED* 🔥";
+    let emoji;
+    switch (this.status) {
+      case "success":
+        emoji = "✅";
+        break;
+      case "fail":
+        emoji = "🔥";
+        break;
+      default:
+        emoji = "";
+        break;
     }
 
-    return `${projectText} deploy  ${statusText}`;
+    return `${projectText} deploy  *${this.status}* ${emoji}`;
   }
 }

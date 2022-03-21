@@ -1,5 +1,4 @@
 import { hangoutNotification as hangout } from "../hangout/HangoutNotification";
-import { readData } from "../storage/redis";
 
 export class PipelineEventHandler {
   body;
@@ -15,11 +14,8 @@ export class PipelineEventHandler {
 
   async handle() {
     if (this.isDeployProd() && this.inAllowStatus()) {
-      let threadKey = null;
-      if (this.project.name) {
-        threadKey = await readData(this.project.name);
-      }
       const message = this.renderMessage();
+      const threadKey = this.project.name;
       hangout.sendMessage(message, threadKey);
     }
   }
@@ -52,6 +48,6 @@ export class PipelineEventHandler {
         break;
     }
 
-    return `${projectText} deploy  *${this.status}* ${emoji}`;
+    return `${emoji} ${projectText} deploy  *${this.status}*`;
   }
 }

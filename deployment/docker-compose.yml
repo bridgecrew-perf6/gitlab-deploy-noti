@@ -18,16 +18,7 @@ services:
       - .env
     environment:
       - NODE_ENV=production
-    depends_on:
-      - redis
-    restart: always
-
-  redis:
-    image: redis:6.0-alpine
-    volumes:
-      - redis_data:/data
     restart: always
 
 volumes:
   node_modules:
-  redis_data:

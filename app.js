@@ -3,14 +3,8 @@ import cors from "cors";
 import compression from "compression";
 import router from "./router";
 import config from "./config";
-import { redisClient } from "./services/storage/redis";
 
 const app = express();
-
-async function lunchRedis() {
-  await redisClient.connect("redis", 6379);
-}
-lunchRedis();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

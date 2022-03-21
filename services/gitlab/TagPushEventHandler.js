@@ -1,5 +1,4 @@
 import { hangoutNotification as hangout } from "../hangout/HangoutNotification";
-import { storeData } from "../storage/redis";
 
 export class TagPushEventHandler {
   body;
@@ -16,8 +15,7 @@ export class TagPushEventHandler {
 
   async handle() {
     const message = this.renderMessage();
-    const threadKey = this.generateThreadKey();    
-    storeData(this.project.name, threadKey);
+    const threadKey = this.project.name;
     hangout.sendMessage(message, threadKey);
   }
 
@@ -28,14 +26,10 @@ export class TagPushEventHandler {
       projectText = `<${projectPiplineUrl}|${this.project.name}>`;
     }
 
-    return `_${this.userName}_ tag  *${this.tag}*  to ${projectText}  🚀`;
+    return `🚀 _${this.userName}_ tag  *${this.tag}*  to ${projectText}`;
   }
 
   getTag() {
     return this.body.ref.replace("refs/tags/", "");
-  }
-
-  generateThreadKey() {
-    return `${this.project.name}_${this.tag}`;
   }
 }

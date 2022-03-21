@@ -5,6 +5,7 @@ export class PipelineEventHandler {
   body;
   project;
   status;
+  allowStatus = ["success", "fail"];
 
   constructor(body) {
     this.body = body;
@@ -13,7 +14,7 @@ export class PipelineEventHandler {
   }
 
   async handle() {
-    if (this.isDeployProd) {
+    if (this.isDeployProd() && this.inAllowStatus()) {
       let threadKey = null;
       if (this.project.name) {
         threadKey = await readData(this.project.name);
@@ -28,6 +29,10 @@ export class PipelineEventHandler {
       object_attributes: { stages },
     } = this.body;
     return (stages || []).includes("deploy-prod");
+  }
+
+  inAllowStatus() {
+    return this.allowStatus.includes(this.status);
   }
 
   renderMessage() {

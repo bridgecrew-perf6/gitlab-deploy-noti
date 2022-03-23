@@ -4,7 +4,7 @@ export class PipelineEventHandler {
   body;
   project;
   status;
-  allowStatus = ["success", "fail"];
+  allowStatus = ["success", "failed"];
 
   constructor(body) {
     this.body = body;
